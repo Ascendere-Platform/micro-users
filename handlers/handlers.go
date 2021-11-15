@@ -16,6 +16,7 @@ func Manejadores() {
 
 	router.HandleFunc("/registro", middlew.ChequeoBD(usuariosrouters.Registro)).Methods("POST")
 
+
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
 		PORT = "8080"
