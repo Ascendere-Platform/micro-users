@@ -14,7 +14,7 @@ func LeoPostSeguidores(ID string, pagina int) ([]models.DevuelvoPostSeguidores, 
 	defer cancel()
 
 	db := bd.MongoCN.Database("Usuarios")
-	col := db.Collection("post")
+	col := db.Collection("relacion")
 
 	skip := (pagina - 1) * 20
 
