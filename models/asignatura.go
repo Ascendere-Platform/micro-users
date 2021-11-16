@@ -7,4 +7,5 @@ type Asignatura struct {
 	NombreAsignatura string `bson:"nombreAsignatura" json:"nombreAsignatura,omitempty"`
 	Modalidad string `bson:"modalidad" json:"modalidad,omitempty"`
 	FacultadID string `bson:"facultadid" json:"facultadid,omitempty"`
+	Periodo string `bson:"periodo" json:"periodo,omitempty"`
 } 
