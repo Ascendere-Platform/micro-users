@@ -15,7 +15,7 @@ func ModificoRegistro(u models.Usuario, ID string) (bool, error) {
 
 	defer cancel()
 
-	db := bd.MongoCN.Database("twittor")
+	db := bd.MongoCN.Database("Usuarios")
 	col := db.Collection("usuarios")
 
 	registro := make(map[string]interface{})
