@@ -11,8 +11,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-//LeoTweets es la función que me devuelve todos los tweets de un usuario
-func LeoTweets (ID string, pagina int64) ([]*models.DevuelvoPost, bool){
+//LeoPost es la función que me devuelve todos los Post de un usuario
+func LeoPost (ID string, pagina int64) ([]*models.DevuelvoPost, bool){
 
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()

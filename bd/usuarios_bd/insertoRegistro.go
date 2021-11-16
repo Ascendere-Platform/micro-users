@@ -20,6 +20,7 @@ func InsertoRegistro(u models.Usuario) (string, bool, error){
 
 	u.Password, _ = EncriptarPassword(u.Password)
 	u.ID = primitive.NewObjectID()
+	u.RolId = "6194238cc5b410303ff7b50d"
 
 	result, err := col.InsertOne(ctx, u)
 

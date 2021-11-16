@@ -28,7 +28,7 @@ func ChequeoUsuarioAdmin(id string) (models.Usuario, bool, string) {
 	}
 
 	condicion := bson.M{"_id": objID}
-	condicionRol := bson.M{"rol": "admin"}
+	condicionRol := bson.M{"nombreRol": "admin"}
 
 	errUsuario := col.FindOne(ctx, condicion).Decode(&resultadoUsuario)
 
