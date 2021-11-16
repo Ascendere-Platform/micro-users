@@ -29,7 +29,7 @@ func Manejadores() {
 	router.HandleFunc("/post", middlew.ChequeoBD(middlew.ValidoJWT(postrouters.GraboPost))).Methods("POST")
 	router.HandleFunc("/leoPost", middlew.ChequeoBD(middlew.ValidoJWT(postrouters.LeoPost))).Methods("GET")
 	router.HandleFunc("/eliminarPost", middlew.ChequeoBD(middlew.ValidoJWT(postrouters.EliminarPost))).Methods("DELETE")
-	router.HandleFunc("/leoPostsSeguidores", middlew.ChequeoBD(middlew.ValidoJWT(postrouters.LeoPostSeguidores))).Methods("GET")
+	router.HandleFunc("/leoPostSeguidores", middlew.ChequeoBD(middlew.ValidoJWT(postrouters.LeoPostSeguidores))).Methods("GET")
 
 	//Llamadas al crud de Relaciones
 	router.HandleFunc("/seguirUsuario", middlew.ChequeoBD(middlew.ValidoJWT(relacionrouters.SeguirUsuario))).Methods("POST")
