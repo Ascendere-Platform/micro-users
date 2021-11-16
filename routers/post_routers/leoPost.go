@@ -8,7 +8,7 @@ import (
 	postbd "github.com/ascendere/micro-users/bd/post_bd"
 )
 
-func LeoTweets (w http.ResponseWriter, r *http.Request){
+func LeoPost (w http.ResponseWriter, r *http.Request){
 
 	ID := r.URL.Query().Get("id")
 	if len(ID) <1 {

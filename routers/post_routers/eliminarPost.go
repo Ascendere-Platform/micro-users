@@ -7,7 +7,7 @@ import (
 	"github.com/ascendere/micro-users/routers"
 )
 
-func EliminarTweet (w http.ResponseWriter, r *http.Request){
+func EliminarPost (w http.ResponseWriter, r *http.Request){
 
 	ID := r.URL.Query().Get("id")
 
