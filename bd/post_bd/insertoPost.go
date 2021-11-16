@@ -10,8 +10,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-//InsertoTweet graba el tweet en la bd
-func InsertoTweet (t models.GraboPost) (string, bool, error){
+//InsertoPost graba el post en la bd
+func InsertoPost (t models.GraboPost) (string, bool, error){
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 

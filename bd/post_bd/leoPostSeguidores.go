@@ -9,7 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func LeoTweetsSeguidores(ID string, pagina int) ([]models.DevuelvoPostSeguidores, bool) {
+func LeoPostSeguidores(ID string, pagina int) ([]models.DevuelvoPostSeguidores, bool) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
