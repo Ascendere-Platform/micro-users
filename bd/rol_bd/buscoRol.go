@@ -9,7 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-//BuscoPerfil busca un perfil en la BD
+
 func BuscoRol(nombre string) (models.Rol, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
 
@@ -18,7 +18,7 @@ func BuscoRol(nombre string) (models.Rol, error) {
 	db := bd.MongoCN.Database("Usuarios")
 	col := db.Collection("rol")
 
-	condicion := bson.M{"rol":nombre}
+	condicion := bson.M{"nombreRol":nombre}
 
 	var resultado models.Rol
 
