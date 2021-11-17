@@ -2,6 +2,7 @@ package asignaturabd
 
 import (
 	"context"
+	"strings"
 	"time"
 
 	"github.com/ascendere/micro-users/bd"
@@ -17,11 +18,14 @@ func RegistroAsignatura (a models.Asignatura) (string, bool, error){
 	db := bd.MongoCN.Database("Usuarios")
 	col := db.Collection("asignatura")
 
+	modalidad := strings.ToUpper(a.Modalidad)
+	periodo := strings.ToUpper(a.Periodo)
+
 	registro := models.Asignatura{
 		ID:        primitive.NewObjectID(),
 		NombreAsignatura: a.NombreAsignatura,
-		Modalidad: a.Modalidad,
-		Periodo: a.Periodo,
+		Modalidad: modalidad,
+		Periodo: periodo,
 		FacultadID: a.FacultadID,
 	}
 
