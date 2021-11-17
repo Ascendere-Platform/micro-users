@@ -12,10 +12,6 @@ type DevuelvoAsignaturas struct {
 		ID string `bson:"_id,omitempty" json:"id"`
 		NombreAsignatura string `bson:"nombreAsignatura" json:"nombreAsignatura,omitempty"`
 		Modalidad string `bson:"modalidad" json:"modalidad,omitempty"`
-		Facultad struct {
-			ID primitive.ObjectID `bson:"_id,omitempty" json:"id"`
-			NombreFacultad string `bson:"nombreRol" json:"nombreRol,omitempty"`
-		}
 		Periodo string `bson:"periodo" json:"periodo,omitempty"`
 	}
 }
