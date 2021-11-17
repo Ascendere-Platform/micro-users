@@ -9,7 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func InsertoRegistro(a models.Asignatura) (string, bool, error){
+func RegistroAsignatura (a models.Asignatura) (string, bool, error){
 
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
@@ -23,7 +23,6 @@ func InsertoRegistro(a models.Asignatura) (string, bool, error){
 		Modalidad: a.Modalidad,
 		Periodo: a.Periodo,
 		FacultadID: a.FacultadID,
-		
 	}
 
 	result, err := col.InsertOne(ctx, registro)
