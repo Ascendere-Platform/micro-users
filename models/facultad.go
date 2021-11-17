@@ -4,5 +4,5 @@ import "go.mongodb.org/mongo-driver/bson/primitive"
 
 type Facultad struct {
 	ID primitive.ObjectID `bson:"_id,omitempty" json:"id"`
-	NombreFacultad string `bson:"nombreRol" json:"nombreRol,omitempty"`
+	NombreFacultad string `bson:"nombreFacultad" json:"nombreFacultad,omitempty"`
 } 

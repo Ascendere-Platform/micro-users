@@ -1,27 +1,24 @@
 package usuariosrouters
 
 import (
-	"encoding/json"
 	"net/http"
 
 	rolbd "github.com/ascendere/micro-users/bd/rol_bd"
 	"github.com/ascendere/micro-users/models"
-	"github.com/ascendere/micro-users/routers"
 )
 
 func ModificarRolUsuario (w http.ResponseWriter, r *http.Request){
 
+	idUser := r.URL.Query().Get("iduser")
+	idRol := r.URL.Query().Get("idrol")
+
 	var t models.Usuario
 
-	err := json.NewDecoder(r.Body).Decode(&t)
+	t.RolId = idRol
 
-	if err != nil {
-		http.Error(w, "Datos incorrectos"+err.Error(),400)
-		return
-	}
 
 	var status bool
-	status, err = rolbd.ModificoRolUsuario(t, routers.IDUsuario)
+	status, err := rolbd.ModificoRolUsuario(t, idUser)
 
 	if err != nil {
 		http.Error(w, "Ocurrio un error al intentar modificar el rol del usuario "+err.Error(),400)

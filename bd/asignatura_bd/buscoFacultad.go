@@ -1,4 +1,4 @@
-package rolbd
+package asignaturabd
 
 import (
 	"context"
@@ -10,17 +10,17 @@ import (
 )
 
 
-func BuscoRol(nombre string) (models.Rol, error) {
+func BuscoFacultad(nombre string) (models.Facultad, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
 
 	defer cancel()
 
 	db := bd.MongoCN.Database("Usuarios")
-	col := db.Collection("rol")
+	col := db.Collection("facultad")
 
-	condicion := bson.M{"nombreRol":nombre}
+	condicion := bson.M{"nombreFacultad":nombre}
 
-	var resultado models.Rol
+	var resultado models.Facultad
 
 	err := col.FindOne(ctx, condicion).Decode(&resultado)
 	

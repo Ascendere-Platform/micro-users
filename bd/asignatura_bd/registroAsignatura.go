@@ -1,4 +1,4 @@
-package usuariosbd
+package asignaturabd
 
 import (
 	"context"
@@ -9,20 +9,24 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-//InsertoRegistro es la parada final con la BD para insertar los datos del usuario
-func InsertoRegistro(u models.Usuario) (string, bool, error){
+func InsertoRegistro(a models.Asignatura) (string, bool, error){
 
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
 	db := bd.MongoCN.Database("Usuarios")
-	col := db.Collection("usuarios")
+	col := db.Collection("asignatura")
 
-	u.Password, _ = EncriptarPassword(u.Password)
-	u.ID = primitive.NewObjectID()
-	u.RolId = "6194238cc5b410303ff7b50d"
+	registro := models.Asignatura{
+		ID:        primitive.NewObjectID(),
+		NombreAsignatura: a.NombreAsignatura,
+		Modalidad: a.Modalidad,
+		Periodo: a.Periodo,
+		FacultadID: a.FacultadID,
+		
+	}
 
-	result, err := col.InsertOne(ctx, u)
+	result, err := col.InsertOne(ctx, registro)
 
 	if err != nil {
 		return "", false, err
