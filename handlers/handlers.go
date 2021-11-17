@@ -56,7 +56,7 @@ func Manejadores() {
 	router.HandleFunc("/buscarAsignatura", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.BuscarAsignatura))).Methods("GET")
 	router.HandleFunc("/eliminarAsignatura", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.EliminarAsignatura))).Methods("DELETE")
 	router.HandleFunc("/listarAsignaturas", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.ListarAsignaturas))).Methods("GET")
-	router.HandleFunc("/modificarPerfil", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.ModificarAsignatura))).Methods("PUT")
+	router.HandleFunc("/modificarAsignatura", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.ModificarAsignatura))).Methods("PUT")
 
 
 	//Llamadas al crud de Asignar Asignaturas a Usuarios

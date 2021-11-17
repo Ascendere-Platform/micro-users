@@ -15,7 +15,7 @@ func EliminarAsignatura(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := asignaturabd.BorroFacultad(asignaturaID)
+	err := asignaturabd.BorroAsignatura(asignaturaID)
 	if err != nil {
 		http.Error(w, "Ocurrio un error"+err.Error(), http.StatusBadRequest)
 		return

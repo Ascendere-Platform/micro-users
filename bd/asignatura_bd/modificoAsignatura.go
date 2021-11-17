@@ -2,6 +2,7 @@ package asignaturabd
 
 import (
 	"context"
+	"strings"
 	"time"
 
 	"github.com/ascendere/micro-users/bd"
@@ -23,13 +24,15 @@ func ModificoRegistro(u models.Asignatura) (bool, error) {
 		registro["nombreAsignatura"] = u.NombreAsignatura
 	}
 	if len(u.Modalidad) > 0 {
-		registro["modalidad"] = u.Modalidad
+		modalidad := strings.ToUpper(u.Modalidad)
+		registro["modalidad"] = modalidad
 	}
 	if len(u.FacultadID) > 0 {
 		registro["apellidos"] = u.FacultadID
 	}
 	if len(u.Periodo) > 0 {
-		registro["avatar"] = u.Periodo
+		periodo := strings.ToUpper(u.Periodo)
+		registro["periodo"] = periodo
 	}
 
 	updtString := bson.M{

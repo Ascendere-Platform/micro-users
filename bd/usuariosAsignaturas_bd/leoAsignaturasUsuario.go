@@ -24,7 +24,7 @@ func LeoAsignaturasUsuario(idUsuario string, pagina int) ([]models.DevuelvoAsign
 	condiciones = append(condiciones, bson.M{
 		"$lookup": bson.M{
 			"from": "asignatura",
-			"localField": "asignaturaid",
+			"localField": "asignaturaId",
 			"foreignField": "_id",
 			"as": "asignatura",
 		}})
