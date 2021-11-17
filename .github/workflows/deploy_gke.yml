@@ -1,6 +1,8 @@
 name: Deploy to GKE
 
 on:
+  workflow_dispatch:
+    # Enable manual run
   push:
     branches:
       - main
