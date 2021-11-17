@@ -18,11 +18,11 @@ func IngresarFacultad(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	/*_, econtrado, _ := asignaturabd.ChequeoYaExisteRol(fac.NombreRol)
+	_, econtrado, _ := asignaturabd.ChequeoYaExisteFacultad(fac.NombreFacultad)
 	if econtrado {
-		http.Error(w, "Ya existe el rol "+rol.NombreRol, 400)
+		http.Error(w, "Ya existe la Facultad "+ fac.NombreFacultad, 400)
 		return
-	}*/
+	}
 
 	_, status, err := asignaturabd.RegistroFacultad(fac)
 

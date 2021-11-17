@@ -48,9 +48,12 @@ func Manejadores() {
 	router.HandleFunc("/listaRoles", middlew.ChequeoBD(middlew.ValidoJWT(rolrouters.ListaRoles))).Methods("GET")
 
 	//Llamadas al crud de Facultades
-	router.HandleFunc("/registroFacultad", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.IngresarFacultad))).Methods("POST")
-	router.HandleFunc("/eliminarFacultad", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.EliminarFacultad))).Methods("DELETE")
+	router.HandleFunc("/registroFacultad", middlew.ChequeoBD(middlew.ValidoJWT(middlew.ValidoAdmin(asignaturarouters.IngresarFacultad)))).Methods("POST")
+	router.HandleFunc("/eliminarFacultad", middlew.ChequeoBD(middlew.ValidoJWT(middlew.ValidoAdmin(asignaturarouters.EliminarFacultad)))).Methods("DELETE")
+	router.HandleFunc("/listarFacultades", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.ListarFacutlades))).Methods("GET")
+	router.HandleFunc("/verFacultad", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.BuscarFacultad))).Methods("GET")
 
+	//Llamadas al crud de Asignaturas
 
 
 	PORT := os.Getenv("PORT")
