@@ -46,6 +46,8 @@ func Manejadores() {
 
 	//Llamadas al crud de Facultades
 	router.HandleFunc("/registroFacultad", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.IngresarFacultad))).Methods("POST")
+	
+
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
