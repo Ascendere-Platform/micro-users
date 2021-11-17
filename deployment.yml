@@ -19,5 +19,5 @@ spec:
     spec:
       containers:
       - name: micro-users-deployment
-        image: jahurtado11/micro_users
+        image: jahurtado11/recommendationservice
         imagePullPolicy: Always
