@@ -61,5 +61,6 @@ jobs:
       run: |-
         # kustomize edit set image ${{ secrets.DOCKER_USERNAME }}/micro_users
         kustomize build . | kubectl apply -f -
-        kubectl rolling-restart deployment/$DEPLOYMENT_NAME
+        kubectl patch deployment $DEPLOYMENT_NAME -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+        kubectl rollout status deployment/$DEPLOYMENT_NAME
         kubectl get services -o wide
