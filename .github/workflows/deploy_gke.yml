@@ -1,0 +1,40 @@
+name: Deploy to GKE
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PROJECT_ID: ${{ secrets.GKE_PROJECT }}
+  GKE_CLUSTER: convocatoria-ascendere
+  GKE_ZONE: us-central1 
+  DEPLOYMENT_NAME: micro-users-deployment
+
+jobs:
+  setup-and-deploy:
+    name: Setup and Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    # Setup gcloud CLI
+    - uses: google-github-actions/setup-gcloud@master
+      with:
+        service_account_key: ${{ secrets.GKE_SA_KEY }}
+        project_id: ${{ secrets.GKE_PROJECT }}
+
+    - name: Get GKE Credentials
+      run: |-
+        gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+        
+    # Deploy the Docker image to the GKE cluster
+    - name: Deploy
+      run: |-
+        ./kustomize edit set image ${{ secrets.DOCKER_USERNAME }}/micro_users
+        ./kustomize build . | kubectl apply -f -
+        kubectl rollout status deployment/$DEPLOYMENT_NAME
+        kubectl get services -o wide
