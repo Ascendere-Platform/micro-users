@@ -10,6 +10,7 @@ import (
 	postrouters "github.com/ascendere/micro-users/routers/post_routers"
 	relacionrouters "github.com/ascendere/micro-users/routers/relacion_routers"
 	rolrouters "github.com/ascendere/micro-users/routers/rol_routers"
+	usuariosAsignaturasrouters "github.com/ascendere/micro-users/routers/usuariosAsignaturas_routers"
 	usuariosrouters "github.com/ascendere/micro-users/routers/usuarios_routers"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
@@ -58,7 +59,11 @@ func Manejadores() {
 	router.HandleFunc("/modificarPerfil", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.ModificarAsignatura))).Methods("PUT")
 
 
-	//Llamadas al crud de Asignar asignaturas a usuarios
+	//Llamadas al crud de Asignar Asignaturas a Usuarios
+	router.HandleFunc("/asignarAsignatura", middlew.ChequeoBD(middlew.ValidoJWT(usuariosAsignaturasrouters.AsignarAsignaturaUsuario))).Methods("POST")
+	router.HandleFunc("/eliminarAsginaturaUsuario", middlew.ChequeoBD(middlew.ValidoJWT(usuariosAsignaturasrouters.EliminarAsignaturaUsuario))).Methods("DELETE")
+	router.HandleFunc("/consultoAsignaturaUsuario", middlew.ChequeoBD(middlew.ValidoJWT(usuariosAsignaturasrouters.ConsultarAsignaturaUsuario))).Methods("GET")
+	router.HandleFunc("/leoAsignaturasUsuario", middlew.ChequeoBD(middlew.ValidoJWT(usuariosAsignaturasrouters.ListarAsignaturasUsuario))).Methods("GET")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
