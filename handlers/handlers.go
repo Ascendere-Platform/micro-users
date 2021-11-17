@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/ascendere/micro-users/middlew"
+	asignaturarouters "github.com/ascendere/micro-users/routers/asignatura_routers"
 	postrouters "github.com/ascendere/micro-users/routers/post_routers"
 	relacionrouters "github.com/ascendere/micro-users/routers/relacion_routers"
 	rolrouters "github.com/ascendere/micro-users/routers/rol_routers"
@@ -46,7 +47,8 @@ func Manejadores() {
 	router.HandleFunc("/verRol", middlew.ChequeoBD(middlew.ValidoJWT(rolrouters.VerRol))).Methods("GET")
 	router.HandleFunc("/listaRoles", middlew.ChequeoBD(middlew.ValidoJWT(rolrouters.ListaRoles))).Methods("GET")
 
-
+	//Llamadas al crud de Facultades
+	router.HandleFunc("/registroFacultad", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.IngresarFacultad))).Methods("POST")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {
