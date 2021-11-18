@@ -10,16 +10,14 @@ import (
 	postrouters "github.com/ascendere/micro-users/routers/post_routers"
 	relacionrouters "github.com/ascendere/micro-users/routers/relacion_routers"
 	rolrouters "github.com/ascendere/micro-users/routers/rol_routers"
+	usuariosAsignaturasrouters "github.com/ascendere/micro-users/routers/usuariosAsignaturas_routers"
 	usuariosrouters "github.com/ascendere/micro-users/routers/usuarios_routers"
-	"github.com/ascendere/micro-users/routers"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 )
 
 func Manejadores() {
 	router := mux.NewRouter()
-
-	router.HandleFunc("", middlew.ChequeoBD(routers.Home)).Methods("GET")
 
 	//Llamadas al crud del Usuario
 	router.HandleFunc("/registro", middlew.ChequeoBD(usuariosrouters.Registro)).Methods("POST")
@@ -48,7 +46,24 @@ func Manejadores() {
 	router.HandleFunc("/listaRoles", middlew.ChequeoBD(middlew.ValidoJWT(rolrouters.ListaRoles))).Methods("GET")
 
 	//Llamadas al crud de Facultades
-	router.HandleFunc("/registroFacultad", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.IngresarFacultad))).Methods("POST")
+	router.HandleFunc("/registroFacultad", middlew.ChequeoBD(middlew.ValidoJWT(middlew.ValidoAdmin(asignaturarouters.IngresarFacultad)))).Methods("POST")
+	router.HandleFunc("/eliminarFacultad", middlew.ChequeoBD(middlew.ValidoJWT(middlew.ValidoAdmin(asignaturarouters.EliminarFacultad)))).Methods("DELETE")
+	router.HandleFunc("/listarFacultades", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.ListarFacutlades))).Methods("GET")
+	router.HandleFunc("/verFacultad", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.BuscarFacultad))).Methods("GET")
+
+	//Llamadas al crud de Asignaturas
+	router.HandleFunc("/registroAsignatura", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.IngresarAsignatura))).Methods("POST")
+	router.HandleFunc("/buscarAsignatura", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.BuscarAsignatura))).Methods("GET")
+	router.HandleFunc("/eliminarAsignatura", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.EliminarAsignatura))).Methods("DELETE")
+	router.HandleFunc("/listarAsignaturas", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.ListarAsignaturas))).Methods("GET")
+	router.HandleFunc("/modificarAsignatura", middlew.ChequeoBD(middlew.ValidoJWT(asignaturarouters.ModificarAsignatura))).Methods("PUT")
+
+
+	//Llamadas al crud de Asignar Asignaturas a Usuarios
+	router.HandleFunc("/asignarAsignatura", middlew.ChequeoBD(middlew.ValidoJWT(usuariosAsignaturasrouters.AsignarAsignaturaUsuario))).Methods("POST")
+	router.HandleFunc("/eliminarAsginaturaUsuario", middlew.ChequeoBD(middlew.ValidoJWT(usuariosAsignaturasrouters.EliminarAsignaturaUsuario))).Methods("DELETE")
+	router.HandleFunc("/consultoAsignaturaUsuario", middlew.ChequeoBD(middlew.ValidoJWT(usuariosAsignaturasrouters.ConsultarAsignaturaUsuario))).Methods("GET")
+	router.HandleFunc("/leoAsignaturasUsuario", middlew.ChequeoBD(middlew.ValidoJWT(usuariosAsignaturasrouters.ListarAsignaturasUsuario))).Methods("GET")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {

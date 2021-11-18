@@ -8,23 +8,17 @@ import (
 	"github.com/ascendere/micro-users/models"
 )
 
-func IngresarFacultad(w http.ResponseWriter, r *http.Request) {
-	var fac models.Facultad
+func IngresarAsignatura(w http.ResponseWriter, r *http.Request) {
+	var asig models.Asignatura
 
-	err := json.NewDecoder(r.Body).Decode(&fac)
+	err := json.NewDecoder(r.Body).Decode(&asig)
 
 	if err != nil {
 		http.Error(w, "Error en los datos recibidos "+err.Error(), 400)
 		return
 	}
 
-	_, econtrado, _ := asignaturabd.ChequeoYaExisteFacultad(fac.NombreFacultad)
-	if econtrado {
-		http.Error(w, "Ya existe la Facultad "+ fac.NombreFacultad, 400)
-		return
-	}
-
-	_, status, err := asignaturabd.RegistroFacultad(fac)
+	_, status, err := asignaturabd.RegistroAsignatura(asig)
 
 	if err != nil {
 		http.Error(w, "Ocurrio un error al insertar una nueva facultad", http.StatusBadRequest)
