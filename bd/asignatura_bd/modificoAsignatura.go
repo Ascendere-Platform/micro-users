@@ -28,7 +28,7 @@ func ModificoRegistro(u models.Asignatura) (bool, error) {
 		registro["modalidad"] = modalidad
 	}
 	if len(u.FacultadID) > 0 {
-		registro["apellidos"] = u.FacultadID
+		registro["facultadid"] = u.FacultadID
 	}
 	if len(u.Periodo) > 0 {
 		periodo := strings.ToUpper(u.Periodo)
