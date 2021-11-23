@@ -63,4 +63,5 @@ jobs:
         kustomize build . | kubectl apply -f -
         kubectl patch deployment $DEPLOYMENT_NAME -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
         kubectl rollout status deployment/$DEPLOYMENT_NAME
+        kubectl patch configmap nginx-configuration -n ingress-nginx -p "$(cat nginx-configuration-configmap-patch.yaml)"
         kubectl get services -o wide
