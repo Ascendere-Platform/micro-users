@@ -62,13 +62,13 @@ jobs:
         helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
         helm repo update
 
-    - name: Instalar NGINX Ingress
-      run: helm install ingress-nginx/ingress-nginx --set controller.service.loadBalancerIP="34.132.41.100",rbac.create=true --generate-name
-
     - name: Get GKE Credentials
       run: |-
         gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
-        
+      
+    - name: Instalar NGINX Ingress
+      run: helm install ingress-nginx/ingress-nginx --set controller.service.loadBalancerIP="34.132.41.100",rbac.create=true --generate-name
+
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
