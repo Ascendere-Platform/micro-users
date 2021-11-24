@@ -63,7 +63,7 @@ jobs:
         helm repo update
 
     - name: Instalar NGINX Ingress
-      run: helm install stable/nginx-ingress --set controller.service.loadBalancerIP="34.132.41.100",rbac.create=true --generate-name
+      run: helm install ingress-nginx/ingress-nginx --set controller.service.loadBalancerIP="34.132.41.100",rbac.create=true --generate-name
 
     - name: Get GKE Credentials
       run: |-
