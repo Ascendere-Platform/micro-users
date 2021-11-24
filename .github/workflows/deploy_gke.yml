@@ -52,6 +52,19 @@ jobs:
         service_account_key: ${{ secrets.GKE_SA_KEY }}
         project_id: ${{ secrets.GKE_PROJECT }}
 
+    # Install helm
+    - name: Install Helm
+      run: |
+        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+    - name: Agregar Helm Repo
+      run: |
+        helm repo add stable https://charts.helm.sh/stable
+        helm repo update
+
+    - name: Instalar NGINX Ingress
+      run: helm install stable/nginx-ingress --set controller.service.loadBalancerIP="[MY-STATIC-IP]",rbac.create=true --generate-name
+
     - name: Get GKE Credentials
       run: |-
         gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
@@ -59,9 +72,21 @@ jobs:
     # Deploy the Docker image to the GKE cluster
     - name: Deploy
       run: |-
-        # kustomize edit set image ${{ secrets.DOCKER_USERNAME }}/micro_users
         kustomize build . | kubectl apply -f -
         kubectl patch deployment $DEPLOYMENT_NAME -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"date\":\"`date +'%s'`\"}}}}}"
+        
+        kubectl apply -f ingress.yaml
+
+        kubectl apply --validate=false -f https://raw.githubusercontent.com/jetstack/cert-manager/v0.13.0/deploy/manifests/00-crds.yaml
+        kubectl create namespace cert-manager
+        helm repo add jetstack https://charts.jetstack.io
+        helm repo update
+        helm install \ cert-manager \ --namespace cert-manager \ --version v0.13.0 \ jetstack/cert-manager
+        cat letsencrypt-issuer.yaml | sed -e "s/email: ''/email: $EMAIL/g" | kubectl apply -f-
+
+        kubectl apply -f ingress-tls.yaml
+        kubectl describe ingress esp-ingress
+
         kubectl rollout status deployment/$DEPLOYMENT_NAME
         kubectl patch configmap nginx-configuration -n ingress-nginx -p "$(cat nginx-configuration-configmap-patch.yaml)"
         kubectl get services -o wide

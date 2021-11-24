@@ -1,0 +1,19 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: esp-tls
+  namespace: default
+spec:
+  secretName: esp-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: api.endpoints.ascendere-platform.cloud.goog
+  dnsNames:
+  - api.endpoints.ascendere-platform.cloud.goog
+  acme:
+    config:
+    - http01:
+        ingress: esp-ingress
+      domains:
+      - api.endpoints.ascendere-platform.cloud.goog
