@@ -6,12 +6,15 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func IntentoLogin(email string, password string) (models.Usuario, bool) {
+func IntentoLogin(email string, password string) (models.DevuelvoUsuario, bool) {
+	var usuarioEncontrado models.DevuelvoUsuario
 	usu, encontrado, _ := bd.ChequeoYaExisteUsuario(email)
 
 	if !encontrado {
-		return usu, false
+		return usuarioEncontrado, false
 	}
+
+	usuarioEncontrado, _ = BuscoPerfil(usu.ID.Hex())
 
 	passwordBytes := []byte(password)
 	passwordBD := []byte(usu.Password)
@@ -19,9 +22,9 @@ func IntentoLogin(email string, password string) (models.Usuario, bool) {
 	err := bcrypt.CompareHashAndPassword(passwordBD, passwordBytes)
 
 	if err != nil {
-		return usu, false
+		return usuarioEncontrado, false
 	}
 
-	return usu, true
+	return usuarioEncontrado, true
 
 }

@@ -11,9 +11,10 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-func BuscoPerfil(ID string) (models.Usuario, error) {
+func BuscoPerfil(ID string) (models.DevuelvoUsuario, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
 
+	var usuarioEncontrado models.DevuelvoUsuario
 	defer cancel()
 
 	db := bd.MongoCN.Database("Usuarios")
@@ -31,8 +32,31 @@ func BuscoPerfil(ID string) (models.Usuario, error) {
 	perfil.Password = ""
 	if err != nil {
 		fmt.Println("Registro no encontrado " + err.Error())
-		return perfil, err
+		return usuarioEncontrado, err
 	}
 
-	return perfil, err
+	colRol := db.Collection("rol")
+
+	var rol models.Rol
+	objRol,_ := primitive.ObjectIDFromHex(perfil.RolId)
+
+	errRol := colRol.FindOne(ctx, bson.M{"_id": objRol}).Decode(&rol)
+	
+	if errRol != nil {
+		fmt.Println("Rol no encontrado" + errRol.Error())
+		return usuarioEncontrado, errRol
+	}
+
+	usuarioEncontrado.ID = perfil.ID
+	usuarioEncontrado.Rol = rol
+	usuarioEncontrado.Nombres = perfil.Nombres + " " + perfil.Apellidos
+	usuarioEncontrado.FechaNacimiento = perfil.FechaNacimiento
+	usuarioEncontrado.Email = perfil.Email
+	usuarioEncontrado.Avatar = perfil.Avatar
+	usuarioEncontrado.Banner = perfil.Banner
+	usuarioEncontrado.Biografia = perfil.Biografia
+	usuarioEncontrado.Ubicacion = perfil.Ubicacion
+	usuarioEncontrado.SitioWeb = perfil.SitioWeb
+
+	return usuarioEncontrado, err
 }
