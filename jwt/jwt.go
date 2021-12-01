@@ -7,15 +7,14 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
-func GeneroJWT(t models.Usuario) (string, error){
+func GeneroJWT(t models.DevuelvoUsuario) (string, error){
 
 	miClave := []byte("MastersDelUniverso")
 
 	payload := jwt.MapClaims{
 		"email": t.Email,
 		"nombre": t.Nombres,
-		"apellidos": t.Apellidos,
-		"rolId": t.RolId,
+		"rol": t.Rol.NombreRol,
 		"fecha_Nacimiento": t.FechaNacimiento,
 		"biografia": t.Biografia,
 		"ubicacion": t.Ubicacion,
