@@ -1,6 +1,0 @@
-data:
-  use-proxy-protocol: "true"
-  http-snippet: |
-    server {
-      return 301 \https://$host$request_uri;
-    }
