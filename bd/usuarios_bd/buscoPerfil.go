@@ -44,7 +44,7 @@ func BuscoPerfil(ID string) (models.DevuelvoUsuario, error) {
 	
 	if errRol != nil {
 		fmt.Println("Rol no encontrado" + errRol.Error())
-		return usuarioEncontrado, err
+		return usuarioEncontrado, errRol
 	}
 
 	usuarioEncontrado.ID = perfil.ID
