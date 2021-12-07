@@ -7,6 +7,7 @@ import (
 	"github.com/ascendere/micro-users/bd"
 	"github.com/ascendere/micro-users/models"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 
@@ -18,7 +19,9 @@ func BuscoAsignatura(id string) (models.Asignatura, error) {
 	db := bd.MongoCN.Database("Usuarios")
 	col := db.Collection("asignatura")
 
-	condicion := bson.M{"_id":id}
+	objID,_ := primitive.ObjectIDFromHex(id)
+
+	condicion := bson.M{"_id": objID}
 
 	var resultado models.Asignatura
 
