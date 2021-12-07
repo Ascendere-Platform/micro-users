@@ -10,7 +10,7 @@ import (
 )
 
 
-func BuscoAsignatura(nombre string) (models.Asignatura, error) {
+func BuscoAsignatura(id string) (models.Asignatura, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
 
 	defer cancel()
@@ -18,7 +18,7 @@ func BuscoAsignatura(nombre string) (models.Asignatura, error) {
 	db := bd.MongoCN.Database("Usuarios")
 	col := db.Collection("asignatura")
 
-	condicion := bson.M{"nombreAsignatura":nombre}
+	condicion := bson.M{"_id":id}
 
 	var resultado models.Asignatura
 
